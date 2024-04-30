@@ -15,7 +15,7 @@ function getRoomText (coordinate: string) : string {
           text = "Blackness.  Total blackness.";
           break;
         default:
-          text = "Not a valid coordinate";
+          text = "Angelic singing.  The howling of souls.";
       }
       return text;
 

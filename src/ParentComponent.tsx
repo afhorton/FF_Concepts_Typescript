@@ -60,7 +60,7 @@ function ParentComponent() {
 
   return (
     <>
-      <h1>Put in your Coordinates</h1>
+      <h1>Fighting Fantasy</h1>
       {/* <input
         type="text"
         value={coordinate}

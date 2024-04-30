@@ -19,7 +19,7 @@ function GetRoom (coordinate: string) : string {
             room = "Blind Man's Heaven";
             break;
         default:
-            room = "Not a valid coordinate"
+            room = "The Sanctuary"
     }
     return room;
 }
