@@ -16,7 +16,7 @@ function GetRoom (coordinate: string) : string {
             room = "The Lair of Swords";
             break;
         case coordinate == "B2":
-            room = "Heaven of the Blind";
+            room = "Blind Man's Heaven";
             break;
         default:
             room = "Not a valid coordinate"
