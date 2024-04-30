@@ -2,6 +2,7 @@ import {useState} from "react";
 import RoomTitle from "./RoomTitle";
 import RoomText from "./RoomText";
 import RightButton from "./buttons/RightButton";
+import LeftButton from "./buttons/LeftButton";
 
 function ParentComponent() {
   const [coordinate, setCoordinate] = useState<string>("");
@@ -31,6 +32,25 @@ function ParentComponent() {
     }
   } 
 
+  const handleLeftClick = () => {
+    // Update the coordinate state based on its current value.
+    switch (coordinate) {
+      case "A1":
+        setCoordinate("B1");
+        break;
+      case "A2":
+        setCoordinate("A1");
+        break;
+      case "B1":
+        setCoordinate("A1");
+        break;
+      case "B2":
+        setCoordinate("B1");
+        break;
+      default:
+        setCoordinate("B1");
+    }
+  }; 
   // const handleCoordinateChange = (
   //   event: React.ChangeEvent<HTMLInputElement>
   // ) => {
@@ -50,6 +70,7 @@ function ParentComponent() {
       <RoomTitle coordinate={coordinate} />
       <RoomText coordinate={coordinate} />
       <RightButton coordinate={coordinate} handleRightClick={handleRightClick} />
+      <LeftButton coordinate={coordinate} handleLeftClick={handleLeftClick} />
       {/* <button onClick={handleGetRoom}>Find out where you are.</button>
       <h1>You are in {room}</h1> */}
 
