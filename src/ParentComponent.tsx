@@ -5,12 +5,24 @@ import RightButton from "./buttons/RightButton";
 import LeftButton from "./buttons/LeftButton";
 
 function ParentComponent() {
-  const [coordinate, setCoordinate] = useState<string>("");
-//   const [room, setRoom] = useState<string>("");
 
-//   const handleGetRoom = () => {
-//     setRoom(getRoom(coordinate));
-//   };
+  // The current coordinate of the player.
+  const [coordinate, setCoordinate] = useState<string>("");
+
+  // Determines if there is a fight occurance in the room.
+  const [isFight, setIsFight] = useState<boolean>(false);
+
+ // Determines if the player is currently fighting. 
+  const [isFighting, setIsFighting] = useState<boolean>(false);
+
+// Fix this.  It needs to be setIsFighting.
+const handleFightClick = () => {
+    setIsFight(true);
+
+    setTimeout(
+      () => { setIsFight(false);}, 10000
+    );
+};
 
   const handleRightClick = () => {
     // Update the coordinate state based on its current value.
@@ -57,6 +69,8 @@ function ParentComponent() {
   //   const value = String(event.target.value);
   //   setCoordinate(value);
   // };
+
+
 
   return (
     <>
