@@ -1,13 +1,11 @@
 interface LookAroundBtnProps {
-  coordinate: string;
-  handleLookAroundClick: () => void;
+  handleLookAround: () => void;
 }
 
-export default function LookAroundButton ({coordinate, handleLookAroundClick}: LookAroundBtnProps) {
-  const name = "Look Around";
+export default function LookAroundButton ({handleLookAround}: LookAroundBtnProps) {
   return (
     <>
-      <button onClick={handleLookAroundClick}>{name}</button>
+      <button onClick={handleLookAround}>Look Around</button>
     </>
   );
 }
