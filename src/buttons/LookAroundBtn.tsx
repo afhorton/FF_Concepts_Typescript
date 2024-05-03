@@ -1,11 +1,12 @@
 interface LookAroundBtnProps {
+  isFight: boolean;
   handleLookAround: () => void;
 }
 
-export default function LookAroundButton ({handleLookAround}: LookAroundBtnProps) {
+export default function LookAroundButton ({handleLookAround, isFight}: LookAroundBtnProps) {
   return (
     <>
-      <button onClick={handleLookAround}>Look Around</button>
+      <button onClick={handleLookAround} disabled={isFight}>Look Around</button>
     </>
   );
 }

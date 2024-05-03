@@ -1,6 +1,7 @@
-function getRoomText (coordinate: string) : string { 
+function getRoomText (coordinate: string, isFighting: boolean) : string { 
       let text: string;
 
+      if (!isFighting) {
       switch (true) {
         case coordinate == "A1":
           text = "Angelic singing.  The howling of souls.";
@@ -18,15 +19,20 @@ function getRoomText (coordinate: string) : string {
           text = "Angelic singing.  The howling of souls.";
       }
       return text;
+    } else {
+      text = "You are fighting."
+      return text;
+    }
 
 }
 
 interface RoomTextProps {
     coordinate: string;
+    isFighting: boolean;
 }
 
-export default function RoomText ({coordinate}: RoomTextProps) {
-    const text = getRoomText(coordinate);
+export default function RoomText ({coordinate, isFighting}: RoomTextProps) {
+    const text = getRoomText(coordinate, isFighting);
 
     return (
         <>

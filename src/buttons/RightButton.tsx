@@ -24,15 +24,16 @@ function getButtonName(coordinate: string): string {
 
 interface RightButtonProps {
   coordinate: string;
+  isFight: boolean;
   handleRightClick: () => void;
 }
 
-export default function RightButton( {coordinate, handleRightClick}: RightButtonProps
+export default function RightButton( {coordinate, isFight, handleRightClick}: RightButtonProps
 ) {
    const name = getButtonName(coordinate);
   return (
     <>
-      <button onClick={handleRightClick}>{name}</button>
+      <button onClick={handleRightClick} disabled={isFight}>{name}</button>
     </>
   );
 }

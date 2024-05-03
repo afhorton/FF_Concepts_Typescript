@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import RoomTitle from "./RoomTitle";
 import RoomText from "./RoomText";
 import RightButton from "./buttons/RightButton";
@@ -36,6 +36,10 @@ function ParentComponent() {
            setIsFight(false);
        }
   }
+  // Sets isFight back to 'false' everytime player changes rooms.
+  useEffect(() => {
+    setIsFight(false);
+  }, [coordinate]);
 
   const handleLookAround = () => {
     lookAround(coordinate);
@@ -45,7 +49,9 @@ function ParentComponent() {
     setIsFighting(true);
 
     setTimeout(
-      () => { setIsFighting(false);}, 10000
+      () => { setIsFighting(false);
+      setIsFight(false);
+      }, 1000
     );
   };
 
@@ -108,13 +114,21 @@ function ParentComponent() {
         onChange={handleCoordinateChange}
       /> */}
       <RoomTitle coordinate={coordinate} />
-      <RoomText coordinate={coordinate} />
-      <RightButton coordinate={coordinate} handleRightClick={handleRightClick} />
-      <LeftButton coordinate={coordinate} handleLeftClick={handleLeftClick} />
-      <LookAroundButton  handleLookAround={handleLookAround}/>
+      <RoomText coordinate={coordinate} isFighting={isFighting} />
+      <RightButton
+        coordinate={coordinate}
+        handleRightClick={handleRightClick}
+        isFight={isFight}
+      />
+      <LeftButton
+        coordinate={coordinate}
+        handleLeftClick={handleLeftClick}
+        isFight={isFight}
+      />
+      <LookAroundButton handleLookAround={handleLookAround} isFight={isFight} />
+      <FightBtn isFight={isFight} handleFightClick={handleFightClick} />
       {/* <button onClick={handleGetRoom}>Find out where you are.</button>
       <h1>You are in {room}</h1> */}
-
     </>
   );
 }

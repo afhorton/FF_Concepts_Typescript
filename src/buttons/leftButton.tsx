@@ -22,17 +22,19 @@ function getButtonName(coordinate: string): string {
 
 interface LeftButtonProps {
   coordinate: string;
+  isFight: boolean;
   handleLeftClick: () => void;
 }
 
 export default function LefttButton({
-  coordinate,
+  coordinate, 
+  isFight,
   handleLeftClick,
 }: LeftButtonProps) {
   const name = getButtonName(coordinate);
   return (
     <>
-      <button onClick={handleLeftClick}>{name}</button>
+      <button onClick={handleLeftClick} disabled={isFight}>{name}</button>
     </>
   );
 }

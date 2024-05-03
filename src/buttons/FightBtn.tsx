@@ -1,6 +1,5 @@
 interface FightBtnProps {
   isFight: boolean;
-  coordinate: string;
   handleFightClick: () => void;
 }
 
