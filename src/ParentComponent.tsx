@@ -5,6 +5,7 @@ import RightButton from "./buttons/RightButton";
 import LeftButton from "./buttons/LeftButton";
 import LookAroundButton from "./buttons/LookAroundBtn";
 import FightBtn from "./buttons/FightBtn";
+import PlayerStatsDisplay from "./PlayerStatsDisplay";
 
 function ParentComponent() {
 
@@ -17,11 +18,66 @@ function ParentComponent() {
  // Determines if the player is currently fighting. 
   const [isFighting, setIsFighting] = useState<boolean>(false);
 
+  // The Player
+  const [Player, setPlayer] = useState({
+    HP: 100,
+    MP: 100,
+    GD: 100
+  });
+
+
+  // // The Enemy
+  // const [Enemy, setEnemy] = useState(Default);
+   
+  // // Enemies Types
+  // const [Default, setDefault] = useState({
+  //   name: "Default",
+  //   HP: 0,
+  //   MP: 0,
+  //   GD: 0,
+  // });
+
+  // const [MutantOrc, setMutantOrc] = useState({
+  //   name: 'Mutant Orc',
+  //   HP: 50,
+  //   MP: 100,
+  //   GD: 40
+  // })
+
+  // const [FeralChimera, setFeralChimera] = useState({
+  //   name: 'Feral Chimera',
+  //   HP: 60,
+  //   MP: 100,
+  //   GD: 20
+  // })
+
+  // // Sets Enemy
+  // const setEnemyType = (coordinate: string) => {
+  //   switch (coordinate) {
+  //     case "A1":
+  //       setEnemy(MutantOrc);
+  //       break;
+  //     case "A2":
+  //       setEnemy(Default);
+  //       break;
+  //     case "B1":
+  //       setEnemy(Default);
+  //       break;
+  //     case "B2":
+  //       setEnemy(FeralChimera);
+  //       break;
+  //     default:
+  //       setEnemy(Default);
+  //   }
+  // }
+
+
 
   const lookAround = (coordinate: string) => {
        switch (coordinate) {
          case "A1":
            setIsFight(true);
+          //  setEnemyType(coordinate);
            break;
          case "A2":
            setIsFight(false);
@@ -31,6 +87,7 @@ function ParentComponent() {
            break;
          case "B2":
            setIsFight(true);
+          //  setEnemyType(coordinate);
            break;
          default:
            setIsFight(false);
@@ -113,6 +170,7 @@ function ParentComponent() {
         placeholder="Put them here."
         onChange={handleCoordinateChange}
       /> */}
+      <PlayerStatsDisplay HP={Player.HP} MP={Player.MP} GD={Player.GD} />
       <RoomTitle coordinate={coordinate} />
       <RoomText coordinate={coordinate} isFighting={isFighting} />
       <RightButton
