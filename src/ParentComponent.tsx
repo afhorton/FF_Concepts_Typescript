@@ -77,7 +77,7 @@ function ParentComponent() {
        switch (coordinate) {
          case "A1":
            setIsFight(true);
-          //  setEnemyType(coordinate);
+           setEnemyType(coordinate);
            break;
          case "A2":
            setIsFight(false);
@@ -87,12 +87,22 @@ function ParentComponent() {
            break;
          case "B2":
            setIsFight(true);
-          //  setEnemyType(coordinate);
+           setEnemyType(coordinate);
            break;
          default:
            setIsFight(false);
        }
   }
+
+  // Console.log enemy.name
+  useEffect(
+    () => {
+      if (enemy) {
+        console.log(enemy.name);
+      }
+    }, [enemy]
+  );
+
   // Sets isFight back to 'false' everytime player changes rooms.
   useEffect(() => {
     setIsFight(false);
