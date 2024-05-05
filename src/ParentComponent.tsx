@@ -25,6 +25,13 @@ function ParentComponent() {
     GD: 100
   });
 
+  // Enemy interface 
+  interface Enemy {
+    name: string;
+    HP: number;
+    MP: number;
+    GD: number;
+  }
 
   // // The Enemy
   // const [Enemy, setEnemy] = useState(Default);
