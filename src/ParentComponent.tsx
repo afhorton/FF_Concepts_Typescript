@@ -33,50 +33,43 @@ function ParentComponent() {
     GD: number;
   }
 
-  // // The Enemy
-  // const [Enemy, setEnemy] = useState(Default);
+  // The Enemy
+  const [enemy, setEnemy] = useState<Enemy | null>(null);
    
-  // // Enemies Types
-  // const [Default, setDefault] = useState({
-  //   name: "Default",
-  //   HP: 0,
-  //   MP: 0,
-  //   GD: 0,
-  // });
+  
+  const MutantOrc: Enemy = {
+    name: 'Mutant Orc',
+    HP: 50,
+    MP: 100,
+    GD: 40
+  }
 
-  // const [MutantOrc, setMutantOrc] = useState({
-  //   name: 'Mutant Orc',
-  //   HP: 50,
-  //   MP: 100,
-  //   GD: 40
-  // })
+  const FeralChimera: Enemy = {
+    name: 'Feral Chimera',
+    HP: 60,
+    MP: 100,
+    GD: 20
+  }
 
-  // const [FeralChimera, setFeralChimera] = useState({
-  //   name: 'Feral Chimera',
-  //   HP: 60,
-  //   MP: 100,
-  //   GD: 20
-  // })
-
-  // // Sets Enemy
-  // const setEnemyType = (coordinate: string) => {
-  //   switch (coordinate) {
-  //     case "A1":
-  //       setEnemy(MutantOrc);
-  //       break;
-  //     case "A2":
-  //       setEnemy(Default);
-  //       break;
-  //     case "B1":
-  //       setEnemy(Default);
-  //       break;
-  //     case "B2":
-  //       setEnemy(FeralChimera);
-  //       break;
-  //     default:
-  //       setEnemy(Default);
-  //   }
-  // }
+  // Sets Enemy
+  const setEnemyType = (coordinate: string) => {
+    switch (coordinate) {
+      case "A1":
+        setEnemy(MutantOrc);
+        break;
+      case "A2":
+        setEnemy(null);
+        break;
+      case "B1":
+        setEnemy(null);
+        break;
+      case "B2":
+        setEnemy(FeralChimera);
+        break;
+      default:
+        setEnemy(null);
+    }
+  }
 
 
 
