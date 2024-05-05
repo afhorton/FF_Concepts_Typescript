@@ -181,7 +181,7 @@ function ParentComponent() {
         onChange={handleCoordinateChange}
       /> */}
       <PlayerStatsDisplay HP={Player.HP} MP={Player.MP} GD={Player.GD} />
-      <RoomTitle coordinate={coordinate} />
+      <RoomTitle coordinate={coordinate} enemyName={enemy ? enemy.name: ''} isFight={isFight}/>
       <RoomText coordinate={coordinate} isFighting={isFighting} />
       <RightButton
         coordinate={coordinate}
