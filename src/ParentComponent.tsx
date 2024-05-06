@@ -6,6 +6,7 @@ import LeftButton from "./buttons/LeftButton";
 import LookAroundButton from "./buttons/LookAroundBtn";
 import FightBtn from "./buttons/FightBtn";
 import PlayerStatsDisplay from "./PlayerStatsDisplay";
+import EnemyFightScreen from "./EnemyFightScreen";
 
 function ParentComponent() {
 
@@ -34,9 +35,15 @@ function ParentComponent() {
   }
 
   // The Enemy
-  const [enemy, setEnemy] = useState<Enemy | null>(null);
+  const [enemy, setEnemy] = useState<Enemy>('');
    
-  
+  const DefaultBoy: Enemy = {
+    name: "Default Boy",
+    HP: 10,
+    MP: 10,
+    GD: 10,
+  };
+
   const MutantOrc: Enemy = {
     name: 'Mutant Orc',
     HP: 50,
@@ -58,16 +65,16 @@ function ParentComponent() {
         setEnemy(MutantOrc);
         break;
       case "A2":
-        setEnemy(null);
+        setEnemy(DefaultBoy);
         break;
       case "B1":
-        setEnemy(null);
+        setEnemy(DefaultBoy);
         break;
       case "B2":
         setEnemy(FeralChimera);
         break;
       default:
-        setEnemy(null);
+        setEnemy(DefaultBoy);
     }
   }
 
@@ -182,7 +189,8 @@ function ParentComponent() {
       /> */}
       <PlayerStatsDisplay HP={Player.HP} MP={Player.MP} GD={Player.GD} />
       <RoomTitle coordinate={coordinate} enemyName={enemy ? enemy.name: ''} isFight={isFight}/>
-      <RoomText coordinate={coordinate} isFighting={isFighting} />
+     {isFight ? <EnemyFightScreen enemy={enemy} /> :
+      <RoomText coordinate={coordinate} isFighting={isFighting} /> }
       <RightButton
         coordinate={coordinate}
         handleRightClick={handleRightClick}
