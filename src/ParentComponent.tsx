@@ -155,13 +155,15 @@ function ParentComponent() {
 
   const handleAttackClick = () => {
     if (enemy && Player.weapon) {
-      enemy.HP -= Player.weapon.damage;
+      const newEnemyHP = enemy.HP - Player.weapon.damage;
     
 
-    if (enemy.HP <= 0) {
+    if (newEnemyHP <= 0) {
       setEnemy(null);
       setIsFighting(false);
       setIsFight(false);
+    } else {
+      setEnemy({...enemy, HP: newEnemyHP})
     }
   }
   };
