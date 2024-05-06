@@ -8,6 +8,8 @@ import FightBtn from "./buttons/FightBtn";
 import PlayerStatsDisplay from "./PlayerStatsDisplay";
 import EnemyFightScreen from "./EnemyFightScreen";
 import AttackBtn from "./buttons/AttackBtn";
+import SapBtn from "./buttons/SapBtn";
+
 
 function ParentComponent() {
 
@@ -153,6 +155,7 @@ function ParentComponent() {
     // );
   };
 
+  // IsFighting functions for Buttons
   const handleAttackClick = () => {
     if (enemy && Player.weapon) {
       const newEnemyHP = enemy.HP - Player.weapon.damage;
@@ -167,6 +170,20 @@ function ParentComponent() {
     }
   }
   };
+
+   const handleSapClick = () => {
+     if (enemy && Player.sapStr) {
+       const newEnemyMP = enemy.MP - Player.sapStr;
+       let newPlayerMP = Player.MP + Player.sapStr
+
+       if (newEnemyMP <= 0) {
+        newPlayerMP = Player.MP;
+       } else {
+        setEnemy({ ...enemy, MP: newEnemyMP });
+       }
+       setPlayer({ ...Player, MP: newPlayerMP });
+     }
+   };
 
 
   const handleRightClick = () => {
@@ -220,6 +237,7 @@ function ParentComponent() {
     MP: 100,
     GD: 100,
     weapon: Saber,
+    sapStr: 15,
   });
 
 
@@ -237,11 +255,11 @@ function ParentComponent() {
       <RoomTitle coordinate={coordinate} enemyName={enemy ? enemy.name: ''} isFight={isFight}/>
      {isFight ? <EnemyFightScreen enemy={enemy ? enemy: null} /> :
       <RoomText coordinate={coordinate} isFighting={isFighting} /> }
-      <RightButton
+      {isFighting ? <SapBtn handleSapClick={handleSapClick} /> : <RightButton
         coordinate={coordinate}
         handleRightClick={handleRightClick}
         isFight={isFight}
-      />
+      />}
       <LeftButton
         coordinate={coordinate}
         handleLeftClick={handleLeftClick}
