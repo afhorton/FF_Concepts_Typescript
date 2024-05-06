@@ -58,6 +58,17 @@ function ParentComponent() {
     GD: 20
   }
 
+  // Weapons data
+  interface Weapon {
+    name: string;
+    damage: number;
+  }
+
+  const Saber: Weapon = {
+    name: 'Saber',
+    damage: 10,
+  }
+
   // Sets Enemy
   const setEnemyType = (coordinate: string) => {
     switch (coordinate) {
