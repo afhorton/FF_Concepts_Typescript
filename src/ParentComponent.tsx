@@ -171,14 +171,16 @@ function ParentComponent() {
   }
   };
 
+  // Really need to fix this
    const handleSapClick = () => {
      if (enemy && Player.sapStr) {
        const newEnemyMP = enemy.MP - Player.sapStr;
-       let newPlayerMP = Player.MP + Player.sapStr
+       let newPlayerMP;
 
-       if (newEnemyMP <= 0) {
-        newPlayerMP = Player.MP;
+       if (newEnemyMP < 0) {
+        newPlayerMP = Player.MP + enemy.MP;
        } else {
+        newPlayerMP = Player.MP + Player.sapStr;
         setEnemy({ ...enemy, MP: newEnemyMP });
        }
        setPlayer({ ...Player, MP: newPlayerMP });
