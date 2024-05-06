@@ -7,6 +7,7 @@ import LookAroundButton from "./buttons/LookAroundBtn";
 import FightBtn from "./buttons/FightBtn";
 import PlayerStatsDisplay from "./PlayerStatsDisplay";
 import EnemyFightScreen from "./EnemyFightScreen";
+import AttackBtn from "./buttons/AttackBtn";
 
 function ParentComponent() {
 
@@ -59,7 +60,7 @@ function ParentComponent() {
   }
 
   // The Enemy
-  const [enemy, setEnemy] = useState<Enemy>(DefaultBoy);
+  const [enemy, setEnemy] = useState<Enemy | null>(null);
 
   // Weapons data
   interface Weapon {
@@ -69,7 +70,7 @@ function ParentComponent() {
 
   const Saber: Weapon = {
     name: 'Saber',
-    damage: 10,
+    damage: 20,
   }
 
   //Equip Weapon
@@ -88,16 +89,16 @@ function ParentComponent() {
         setEnemy(new MutantOrc);
         break;
       case "A2":
-        setEnemy(DefaultBoy);
+        setEnemy(null);
         break;
       case "B1":
-        setEnemy(DefaultBoy);
+        setEnemy(null);
         break;
       case "B2":
         setEnemy(new FeralChimera);
         break;
       default:
-        setEnemy(DefaultBoy);
+        setEnemy(null);
     }
   }
 
@@ -145,13 +146,25 @@ function ParentComponent() {
   const handleFightClick = () => {
     setIsFighting(true);
 
-    setTimeout(
-      () => { setIsFighting(false);
-      setIsFight(false);
-      }, 1000
-    );
+    // setTimeout(
+    //   () => { setIsFighting(false);
+    //   setIsFight(false);
+    //   }, 1000
+    // );
   };
 
+  const handleAttackClick = () => {
+    if (enemy && Player.weapon) {
+      enemy.HP -= Player.weapon.damage;
+    
+
+    if (enemy.HP <= 0) {
+      setEnemy(null);
+      setIsFighting(false);
+      setIsFight(false);
+    }
+  }
+  };
 
 
   const handleRightClick = () => {
@@ -220,7 +233,7 @@ function ParentComponent() {
       /> */}
       <PlayerStatsDisplay HP={Player.HP} MP={Player.MP} GD={Player.GD} />
       <RoomTitle coordinate={coordinate} enemyName={enemy ? enemy.name: ''} isFight={isFight}/>
-     {isFight ? <EnemyFightScreen enemy={enemy} /> :
+     {isFight ? <EnemyFightScreen enemy={enemy ? enemy: null} /> :
       <RoomText coordinate={coordinate} isFighting={isFighting} /> }
       <RightButton
         coordinate={coordinate}
@@ -233,7 +246,9 @@ function ParentComponent() {
         isFight={isFight}
       />
       <LookAroundButton handleLookAround={handleLookAround} isFight={isFight} />
-      <FightBtn isFight={isFight} handleFightClick={handleFightClick} />
+      {isFighting ? 
+      <AttackBtn handleAttackClick={handleAttackClick} />:
+      <FightBtn isFight={isFight} handleFightClick={handleFightClick} />}
       {/* <button onClick={handleGetRoom}>Find out where you are.</button>
       <h1>You are in {room}</h1> */}
     </>
