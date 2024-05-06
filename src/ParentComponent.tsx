@@ -19,12 +19,13 @@ function ParentComponent() {
  // Determines if the player is currently fighting. 
   const [isFighting, setIsFighting] = useState<boolean>(false);
 
-  // The Player
-  const [Player, setPlayer] = useState({
-    HP: 100,
-    MP: 100,
-    GD: 100
-  });
+  // See the below: It is useful to note for later.
+//   const [Player, setPlayer] = useState({
+//   HP: 100,
+//   MP: 100,
+//   GD: 100,
+//   weapon: null as Weapon | null, // Player starts with no weapon
+// });
 
   // Enemy interface 
   interface Enemy {
@@ -34,29 +35,31 @@ function ParentComponent() {
     GD: number;
   }
 
-  // The Enemy
-  const [enemy, setEnemy] = useState<Enemy>('');
+  // Types of Enemies
    
   const DefaultBoy: Enemy = {
     name: "Default Boy",
-    HP: 10,
-    MP: 10,
-    GD: 10,
+    HP: 999,
+    MP: 999,
+    GD: 999,
   };
 
-  const MutantOrc: Enemy = {
-    name: 'Mutant Orc',
-    HP: 50,
-    MP: 100,
-    GD: 40
+  class MutantOrc implements Enemy {
+    name = 'Mutant Orc';
+    HP = 50;
+    MP = 100;
+    GD =40;
   }
 
-  const FeralChimera: Enemy = {
-    name: 'Feral Chimera',
-    HP: 60,
-    MP: 100,
-    GD: 20
+  class FeralChimera implements Enemy {
+    name = 'Feral Chimera';
+    HP = 60;
+    MP = 100;
+    GD = 20;
   }
+
+  // The Enemy
+  const [enemy, setEnemy] = useState<Enemy>(DefaultBoy);
 
   // Weapons data
   interface Weapon {
@@ -69,11 +72,20 @@ function ParentComponent() {
     damage: 10,
   }
 
+  //Equip Weapon
+  // Use later.
+  const equipWeapon = (newWeapon: Weapon) => {
+    setPlayer(prevPlayer => ({
+      ...prevPlayer, 
+      weapon: newWeapon,
+    }));
+  };
+
   // Sets Enemy
   const setEnemyType = (coordinate: string) => {
     switch (coordinate) {
       case "A1":
-        setEnemy(MutantOrc);
+        setEnemy(new MutantOrc);
         break;
       case "A2":
         setEnemy(DefaultBoy);
@@ -82,7 +94,7 @@ function ParentComponent() {
         setEnemy(DefaultBoy);
         break;
       case "B2":
-        setEnemy(FeralChimera);
+        setEnemy(new FeralChimera);
         break;
       default:
         setEnemy(DefaultBoy);
@@ -186,6 +198,14 @@ function ParentComponent() {
   //   const value = String(event.target.value);
   //   setCoordinate(value);
   // };
+
+    // The Player
+  const [Player, setPlayer] = useState({
+    HP: 100,
+    MP: 100,
+    GD: 100,
+    weapon: Saber,
+  });
 
 
 
