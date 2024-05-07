@@ -55,7 +55,7 @@ function ParentComponent() {
     HP = 50;
     MP = 100;
     GD = 40;
-    DEX = 5;
+    DEX = 4;
   }
 
   class FeralChimera implements Enemy {
@@ -63,7 +63,7 @@ function ParentComponent() {
     HP = 60;
     MP = 100;
     GD = 20;
-    DEX = 5;
+    DEX = 4;
   }
 
   // The Enemy
