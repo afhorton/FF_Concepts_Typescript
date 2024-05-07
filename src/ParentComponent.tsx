@@ -9,6 +9,7 @@ import PlayerStatsDisplay from "./PlayerStatsDisplay";
 import EnemyFightScreen from "./EnemyFightScreen";
 import AttackBtn from "./buttons/AttackBtn";
 import SapBtn from "./buttons/SapBtn";
+import StealBtn from "./buttons/StealBtn";
 
 
 function ParentComponent() {
@@ -36,6 +37,7 @@ function ParentComponent() {
     HP: number;
     MP: number;
     GD: number;
+    DEX: number;
   }
 
   // Types of Enemies
@@ -45,13 +47,15 @@ function ParentComponent() {
     HP: 999,
     MP: 999,
     GD: 999,
+    DEX: 999
   };
 
   class MutantOrc implements Enemy {
     name = 'Mutant Orc';
     HP = 50;
     MP = 100;
-    GD =40;
+    GD = 40;
+    DEX = 5;
   }
 
   class FeralChimera implements Enemy {
@@ -59,6 +63,7 @@ function ParentComponent() {
     HP = 60;
     MP = 100;
     GD = 20;
+    DEX = 5;
   }
 
   // The Enemy
@@ -72,7 +77,7 @@ function ParentComponent() {
 
   const Saber: Weapon = {
     name: 'Saber',
-    damage: 20,
+    damage: 6,
   }
 
   //Equip Weapon
@@ -104,7 +109,10 @@ function ParentComponent() {
     }
   }
 
-
+  // Dice roll function
+  const diceRoll = (die: number) => {
+    return Math.floor(Math.random() * die)
+  }
 
   const lookAround = (coordinate: string) => {
        switch (coordinate) {
@@ -158,7 +166,7 @@ function ParentComponent() {
   // IsFighting functions for Buttons
   const handleAttackClick = () => {
     if (enemy && Player.weapon) {
-      const newEnemyHP = enemy.HP - Player.weapon.damage;
+      const newEnemyHP = enemy.HP - ( diceRoll(20) + Player.weapon.damage);
     
 
     if (newEnemyHP <= 0) {
@@ -171,10 +179,10 @@ function ParentComponent() {
   }
   };
 
-  // Really need to fix this
+  // Sap Logic
    const handleSapClick = () => {
      if (enemy && Player.sapStr) {
-       const newEnemyMP = enemy.MP - Player.sapStr;
+       const newEnemyMP = enemy.MP - (diceRoll(6) + Player.sapStr);
        let newPlayerMP;
 
        if (newEnemyMP < 0) {
@@ -188,6 +196,25 @@ function ParentComponent() {
      }
    };
 
+   // Steal logic
+
+   const handleStealClick = () => {
+      if (enemy && Player.DEX) {
+        if (enemy.DEX < Player.DEX) {
+          const newEnemyGD = enemy.GD - diceRoll(20);
+          let newPlayerGD: number;
+
+          if (newEnemyGD < 0) {
+            newPlayerGD = Player.GD + enemy.GD;
+            setEnemy({...enemy, GD: 0});
+          } else {
+            newPlayerGD = Player.GD + diceRoll(20);
+            setEnemy({...enemy, GD: newEnemyGD})
+          }
+          setPlayer({...Player, GD: newPlayerGD});
+        }
+      }
+   }
 
   const handleRightClick = () => {
     switch (coordinate) {
@@ -240,7 +267,8 @@ function ParentComponent() {
     MP: 100,
     GD: 100,
     weapon: Saber,
-    sapStr: 15,
+    sapStr: 5,
+    DEX: 5
   });
 
 
@@ -263,11 +291,12 @@ function ParentComponent() {
         handleRightClick={handleRightClick}
         isFight={isFight}
       />}
+      {isFighting ? <StealBtn handleStealClick={handleStealClick} /> :
       <LeftButton
         coordinate={coordinate}
         handleLeftClick={handleLeftClick}
         isFight={isFight}
-      />
+      />}
       <LookAroundButton handleLookAround={handleLookAround} isFight={isFight} />
       {isFighting ? 
       <AttackBtn handleAttackClick={handleAttackClick} />:
