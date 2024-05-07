@@ -5,6 +5,6 @@ interface StealBtnProps {
 
 export default function StealBtn ({handleStealClick}: StealBtnProps) {
     return (
-        <button onClick={handleStealClick}></button>
+        <button onClick={handleStealClick}>Steal</button>
     )
 }
