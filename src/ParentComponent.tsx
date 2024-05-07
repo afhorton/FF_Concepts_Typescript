@@ -179,6 +179,7 @@ function ParentComponent() {
 
        if (newEnemyMP < 0) {
         newPlayerMP = Player.MP + enemy.MP;
+        setEnemy({...enemy, MP: 0});
        } else {
         newPlayerMP = Player.MP + Player.sapStr;
         setEnemy({ ...enemy, MP: newEnemyMP });
