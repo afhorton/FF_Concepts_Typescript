@@ -119,14 +119,34 @@ function ParentComponent() {
     }
   }
 
+  const criticalHit = (die: number, percentage: number): number => {
+    console.log("It's a critical hit!");
+    return diceRoll(die) * percentage;
+  }
+
+  const enemyAttack = (percentage: number) => {
+    const damage = Math.random() < percentage ? diceRoll(6): criticalHit(6, 2.5);
+    setPlayer(prevPlayer => ({...prevPlayer, HP: prevPlayer.HP - damage}));
+  }
   // const enemyTurn = () => {
 
   // }
 
   const wildBeastAI = () => {
-    if (enemy.HP <= )
+    if (enemy && enemy.HP <= enemy.maxHP * 0.25) {
+      desperationAttack();
+    } else {
+      enemyAttack(0.75);
+    }
   }
 
+  const unDeadHealingFactor = () => {
+    
+  }
+
+  const unDeadAI= () => {
+
+  }
   //Equip Weapon
   // Use later.
   const equipWeapon = (newWeapon: Weapon) => {
@@ -158,7 +178,7 @@ function ParentComponent() {
 
   // Dice roll function
   const diceRoll = (die: number) => {
-    return Math.floor(Math.random() * die)
+    return Math.floor(Math.random() * die) + 1
   }
 
   const lookAround = (coordinate: string) => {
