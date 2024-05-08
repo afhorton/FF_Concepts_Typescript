@@ -34,6 +34,7 @@ function ParentComponent() {
   // Enemy interface 
   interface Enemy {
     name: string;
+    maxHP: number;
     HP: number;
     MP: number;
     GD: number;
@@ -44,6 +45,7 @@ function ParentComponent() {
    
   const DefaultBoy: Enemy = {
     name: "Default Boy",
+    maxHP: 999,
     HP: 999,
     MP: 999,
     GD: 999,
@@ -52,6 +54,7 @@ function ParentComponent() {
 
   class MutantOrc implements Enemy {
     name = 'Mutant Orc';
+    maxHP = 50;
     HP = 50;
     MP = 100;
     GD = 40;
@@ -60,6 +63,7 @@ function ParentComponent() {
 
   class FeralChimera implements Enemy {
     name = 'Feral Chimera';
+    maxHP = 60;
     HP = 60;
     MP = 100;
     GD = 20;
@@ -78,6 +82,49 @@ function ParentComponent() {
   const Saber: Weapon = {
     name: 'Saber',
     damage: 6,
+  }
+
+//   function enemyTurn(enemy: Enemy, player: Player) {
+//   if (enemy.HP < 20) {
+//     // If the enemy's HP is low, they choose to heal
+//     enemy.HP += 10;
+//   } else if (player.HP < 50) {
+//     // If the player's HP is low, the enemy chooses to attack
+//     player.HP -= enemy.weapon.damage;
+//   } else {
+//     // Otherwise, the enemy chooses a random action
+//     const actions = ['attack', 'heal'];
+//     const action = actions[Math.floor(Math.random() * actions.length)];
+
+//     if (action === 'attack') {
+//       player.HP -= enemy.weapon.damage;
+//     } else {
+//       enemy.HP += 10;
+//     }
+//   }
+// }
+
+  const desperationAttack = () => {
+    const attackCount = Math.random() < 2/3 ? 2 : 3;
+
+    for (let i = 0; i < attackCount; i++) {
+      setTimeout(
+        () => {
+          const damage = diceRoll(6);
+          setPlayer(
+            prevPlayer => ({...prevPlayer, HP: prevPlayer.HP - damage})
+          );
+        }, i * 2000
+      );
+    }
+  }
+
+  // const enemyTurn = () => {
+
+  // }
+
+  const wildBeastAI = () => {
+    if (enemy.HP <= )
   }
 
   //Equip Weapon
