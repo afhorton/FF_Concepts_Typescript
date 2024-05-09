@@ -36,6 +36,7 @@ function ParentComponent() {
     name: string;
     maxHP: number;
     HP: number;
+    maxMP: number;
     MP: number;
     GD: number;
     DEX: number;
@@ -48,23 +49,26 @@ function ParentComponent() {
     maxHP: 999,
     HP: 999,
     MP: 999,
+    maxMP: 999,
     GD: 999,
-    DEX: 999
+    DEX: 999,
   };
 
   class MutantOrc implements Enemy {
-    name = 'Mutant Orc';
+    name = "Mutant Orc";
     maxHP = 50;
     HP = 50;
+    maxMP = 100;
     MP = 100;
     GD = 40;
     DEX = 4;
   }
 
   class FeralChimera implements Enemy {
-    name = 'Feral Chimera';
+    name = "Feral Chimera";
     maxHP = 60;
     HP = 60;
+    maxMP = 100;
     MP = 100;
     GD = 20;
     DEX = 4;
@@ -128,9 +132,30 @@ function ParentComponent() {
     const damage = Math.random() < percentage ? diceRoll(6): criticalHit(6, 2.5);
     setPlayer(prevPlayer => ({...prevPlayer, HP: prevPlayer.HP - damage}));
   }
+
+   const unDeadAttack = (percentage: number) => {
+     const damage =
+       Math.random() < percentage ? diceRoll(6) : criticalHit(6, 2.5);
+     return damage;
+   };
   // const enemyTurn = () => {
 
   // }
+
+  const heal = (healAmount: number) => {
+    if (healAmount < 0 || healAmount > 1) {
+      console.error('healAmount must be a percentage (between 0 and 1).');
+      return;
+    }
+    if (enemy) {
+      const healValue = enemy.maxHP * healAmount;
+      setEnemy(prevEnemy => prevEnemy ? {...prevEnemy, HP: prevEnemy.HP + healValue}: null);
+    } else {
+      const healValue = Player.maxHP * healAmount;
+      setPlayer(prevPlayer => ({...prevPlayer, HP: prevPlayer.HP + healValue}))
+    }
+
+  }
 
   const wildBeastAI = () => {
     if (enemy && enemy.HP <= enemy.maxHP * 0.25) {
@@ -140,13 +165,56 @@ function ParentComponent() {
     }
   }
 
-  const unDeadHealingFactor = () => {
-    
+
+
+  const unDeadHealingFactor= () => {
+     if (enemy && enemy.MP >= enemy.maxMP * 0.75) {
+       heal(0.15);
+     } else if (
+       enemy &&
+       enemy.MP >= enemy.maxMP * 0.5 &&
+       enemy.MP < enemy.maxMP * 0.75
+     ) {
+       heal(0.1);
+     } else if (
+       enemy &&
+       enemy.MP >= enemy.maxMP * 0.25 &&
+       enemy.MP < enemy.maxMP * 0.5
+     ) {
+       heal(0.05);
+     } else {
+       heal(0);
+     }
   }
 
-  const unDeadAI= () => {
+  const unDeadAI = () => {
+    let damage: number;
+    if (enemy && enemy.MP >= enemy.maxMP * 0.75) {
+      damage = Number(unDeadAttack(0.75)) + 10;
+      unDeadHealingFactor();
+    } else if (
+      enemy &&
+      enemy.MP >= enemy.maxMP * 0.5 &&
+      enemy.MP < enemy.maxMP * 0.75
+    ) {
+      damage = Number(unDeadAttack(0.75)) + 5;
+      unDeadHealingFactor();
+    } else if (
+      enemy &&
+      enemy.MP >= enemy.maxMP * 0.25 &&
+      enemy.MP < enemy.maxMP * 0.5
+    ) {
+      damage = Number(unDeadAttack(0.75));
+      unDeadHealingFactor();
+    } else {
+      console.log(enemy ? enemy.name + " lies still." : "No enemy found.");
+    }
+    setPlayer((prevPlayer) => ({
+      ...prevPlayer,
+      HP: prevPlayer.HP - damage,
+    }));
+  };
 
-  }
   //Equip Weapon
   // Use later.
   const equipWeapon = (newWeapon: Weapon) => {
@@ -330,12 +398,14 @@ function ParentComponent() {
 
     // The Player
   const [Player, setPlayer] = useState({
+    maxHP: 100,
     HP: 100,
+    maxMP: 100,
     MP: 100,
     GD: 100,
     weapon: Saber,
     sapStr: 5,
-    DEX: 5
+    DEX: 5,
   });
 
 
